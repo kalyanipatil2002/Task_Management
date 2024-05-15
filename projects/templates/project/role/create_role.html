@@ -1,20 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <title>Create Role</title>
-    {% load sweetify %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<title>Create Task</title>
+{% load sweetify %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
+    }
+
+    .form-container {
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
+
 <body>
-    <h1>Create a New Project</h1>
-    <form method="post" action="{% url 'create_role' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Role</button>
-    </form>
+    <div class="form-container">
+        <h1 class="text-center">Create a New Role</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Create new role</button>
+        </form>
+    </div>
 
     {% sweetify %}
 </body>
+
 </html>

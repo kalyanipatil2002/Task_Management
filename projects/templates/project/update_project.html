@@ -1,39 +1,44 @@
-<!-- update_project.html -->
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Project</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>Create Project</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        .form-container {
+            max-width: 100%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Update Project</h1>
+    <div class="form-container">
+        <h1 class="text-center">Create a New Project</h1>
         <form method="post">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="id_name">Name:</label>
-                {{ form.name }}
-            </div>
-            <div class="form-group">
-                <label for="id_description">Description:</label>
-                {{ form.description }}
-            </div>
-            <div class="form-group">
-                <label for="id_start_date">Start Date:</label>
-                {{ form.start_date }}
-            </div>
-            <div class="form-group">
-                <label for="id_end_date">End Date:</label>
-                {{ form.end_date }}
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Update Project</button>
         </form>
     </div>
-   
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

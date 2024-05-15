@@ -1,44 +1,89 @@
-<!-- update_task.html -->
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update User</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<title>Create Task</title>
+{% load sweetify %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
+    }
+
+    .form-container {
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Update User</h1>
+    <div class="form-container">
+        {% if messages %}
+        <div class="container">
+            <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        <h1 class="text-center">Update User</h1>
         <form method="post">
             {% csrf_token %}
+            {% for field in form %}
             <div class="form-group">
-                <label for="id_username">UserName:</label>
-                {{ form.username }}
+                {{ field.label_tag }}
+                {{ field }}
             </div>
-            <div class="form-group">
-                <label for="id_name">Name:</label>
-                {{ form.name }}
-            </div>
-            <div class="form-group">
-                <label for="id_email">Email:</label>
-                {{ form.email }}
-            </div>
-            <div class="form-group">
-                <label for="id_password1">Password1:</label>
-                {{ form.password1 }}
-            </div>
-            <div class="form-group">
-                <label for="id_password2">Password2:</label>
-                {{ form.password2 }}
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Update user details</button>
         </form>
     </div>
-   
-    <!-- Bootstrap JS (Optional, if needed for certain features) -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    {% sweetify %}
 </body>
+
 </html>

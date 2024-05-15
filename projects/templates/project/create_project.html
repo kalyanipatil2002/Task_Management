@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <title>Create Project</title>
-    {% load sweetify %}
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        .form-container {
+            max-width: 100%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Create a New Project</h1>
-    <form method="post" action="{% url 'create_Project' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Project</button>
-    </form>
-
-    {% sweetify %}
+    <div class="form-container">
+        <h1 class="text-center">Create a New Project</h1>
+        <form method="post" action="{% url 'create_Project' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Create Project</button>
+        </form>
+    </div>
 </body>
-</html>
 
+</html>

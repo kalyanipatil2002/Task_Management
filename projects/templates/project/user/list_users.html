@@ -3,6 +3,7 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <!-- Custom CSS -->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <h1>List of Users</h1>
@@ -34,10 +36,12 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.role }}</td>
                     <td>
-                        <a href="{% url 'update_user' user.pk %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'user_role_assignment' user.pk %}" class="btn btn-primary">Assign Role</a>
+                        <!-- <a href="{% url 'update_user' user.pk %}" class="btn btn-primary">Edit</a> -->
                         <form action="{% url 'delete_user' user.pk %}" method="post" style="display: inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                            <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -48,5 +52,6 @@
     <!-- Bootstrap JS (Optional, if needed for certain features) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
 {% endblock %}

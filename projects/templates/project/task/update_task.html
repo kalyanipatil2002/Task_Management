@@ -1,44 +1,91 @@
-<!-- update_task.html -->
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <title>Update Task</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    {% load sweetify %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        .form-container {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Update Task</h1>
+    <div class="form-container">
+        <h1 class="text-center">Update Task</h1>
         <form method="post">
             {% csrf_token %}
+            {% for field in form %}
             <div class="form-group">
-                <label for="id_project">Project:</label>
-                {{ form.project }}
+                {{ field.label_tag }}
+                {% if field.name == 'descriptions' %}
+                {{ field }}
+                {% elif field.name == 'status' %}
+                <select id="{{ field.id_for_label }}" name="{{ field.html_name }}" class="form-control">
+                    <option value="TODO">To Do</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="COMPLETED">Completed</option>
+                </select>
+                {% else %}
+                {{ field }}
+                {% endif %}
             </div>
-            <div class="form-group">
-                <label for="id_title">Title:</label>
-                {{ form.title }}
-            </div>
-            <div class="form-group">
-                <label for="id_description">Description:</label>
-                {{ form.descriptions }}
-            </div>
-            <div class="form-group">
-                <label for="id_deadline">Deadline:</label>
-                {{ form.deadline }}
-            </div>
-            <div class="form-group">
-                <label for="id_status">Status:</label>
-                {{ form.status }}
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Update Task</button>
         </form>
     </div>
-   
-    <!-- Bootstrap JS (Optional, if needed for certain features) -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    {% sweetify %}
 </body>
+
 </html>

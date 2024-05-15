@@ -1,51 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <title>Create User</title>
-    {% load sweetify %}
-    <style>
-        body {
-            background-color: #f8f9fa; /* Light gray background */
-        }
-        .container {
-            margin-top: 50px; /* Add some space from the top */
-        }
-        h1 {
-            color: #007bff; /* Blue color for heading */
-            margin-bottom: 30px; /* Add some space below the heading */
-        }
-        form {
-            background-color: #ffffff; /* White background for the form */
-            padding: 20px; /* Add padding inside the form */
-            border-radius: 5px; /* Add rounded corners */
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-        }
-        button[type="submit"] {
-            background-color: #007bff; /* Blue background color for the submit button */
-            color: #ffffff; /* White text color */
-            border: none; /* Remove button border */
-            border-radius: 5px; /* Add rounded corners */
-            padding: 10px 20px; /* Add padding */
-            cursor: pointer; /* Change cursor to pointer on hover */
-        }
-        button[type="submit"]:hover {
-            background-color: #0056b3; /* Darker blue color on hover */
-        }
-    </style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<title>Create Task</title>
+{% load sweetify %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
+    }
+
+    .form-container {
+        max-width: 400px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Create a New User</h1>
+    <div class="form-container">
+        {% if messages %}
+        <div class="container">
+            <div class="alert alert-danger" role="alert">
+                {% for message in messages %}
+                <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        <h1 class="text-center">Create a New User</h1>
         <form method="post" action="{% url 'create_user' %}">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Create User</button>
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Create new user</button>
         </form>
     </div>
 
     {% sweetify %}
 </body>
+
 </html>

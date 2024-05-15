@@ -1,21 +1,91 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <title>Create Project</title>
+    <title>Create Task</title>
     {% load sweetify %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        .form-container {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Create a New Project</h1>
-    <form method="post" action="{% url 'create_task' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Project</button>
-    </form>
+    <div class="form-container">
+        <h1 class="text-center">Create a New Task</h1>
+        <form method="post" action="{% url 'create_task' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {% if field.name == 'descriptions' %}
+                {{ field }}
+                {% elif field.name == 'status' %}
+                <select id="{{ field.id_for_label }}" name="{{ field.html_name }}" class="form-control">
+                    <option value="TODO">To Do</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="COMPLETED">Completed</option>
+                </select>
+                {% else %}
+                {{ field }}
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-submit">Create Task</button>
+        </form>
+    </div>
 
     {% sweetify %}
 </body>
-</html>
 
+</html>
