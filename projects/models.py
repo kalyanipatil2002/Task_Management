@@ -68,12 +68,14 @@ class Task(BaseModel):
         ('COMPLETED', 'Completed'),
     ]
 
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE ,related_name='tasks')
     title = models.CharField(max_length=100)
     descriptions = models.TextField()
     deadline = models.DateTimeField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='TODO')
-    assigned_to = models.ForeignKey(UserProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_tasks')
+    assigned_to = models.ManyToManyField(UserProfile, related_name='assigned_tasks')
+
+    # assigned_to = models.ManyToManyField(UserProfile, on_delete=models.SET_NULL, null=True, blank=True, related_name='assigned_tasks')
 
     def __str__(self):
         return self.title

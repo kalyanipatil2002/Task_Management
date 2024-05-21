@@ -13,17 +13,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* Ensure full height of viewport */
             margin: 0;
             background-color: #f8f9fa;
         }
 
         .form-container {
+            width: 100%; /* Take full width of viewport */
             max-width: 400px;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #fff;
+            box-sizing: border-box; /* Include padding and border in width calculation */
         }
 
         .form-group {
@@ -63,6 +65,11 @@
 <body>
     <div class="form-container">
         <h1 class="text-center">Update Task</h1>
+        {% if alert_message %}
+    <div class="alert alert-danger" role="alert" >
+        {{alert_message}}
+    </div>
+       {% endif %}
         <form method="post">
             {% csrf_token %}
             {% for field in form %}

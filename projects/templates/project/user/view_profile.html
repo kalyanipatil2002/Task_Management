@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}View Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Profile</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ user.username }}</h5>
+            <p class="card-text"><strong>Name:</strong> {{ user.name }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+            <p class="card-text"><strong> Role:</strong> {{ user.role }}</p>
+            <a href="{% url 'update_user' user.pk %}" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

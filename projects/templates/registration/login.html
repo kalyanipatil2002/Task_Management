@@ -62,6 +62,21 @@
         button[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        .create-account {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #007bff;
+        }
+
+        .create-account a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .create-account a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -75,6 +90,9 @@
             <input type="password" id="password" name="password" required><br>
             <button type="submit">Login</button>
         </form>
+        <div class="create-account">
+            <p>Don't have an account? <a href="{% url 'create_user' %}">Create one</a></p>
+        </div>
     </div>
 </body>
 </html>

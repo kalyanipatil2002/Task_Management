@@ -14,7 +14,7 @@ urlpatterns = [
     path('get_projects', get_projects, name='get_projects'),
     path('update-project/<uuid:pk>', update_project, name='update_project'),
     path('delete-project/<uuid:pk>', delete_project, name='delete_project'),
-    
+    path('project_detail/<uuid:pk>', project_detail, name='project_detail'),
 
 
     path('create-task', create_task, name='create_task'),
@@ -26,6 +26,7 @@ urlpatterns = [
     path('users', list_users, name='list_users'),
     # path('update-user/<uuid:pk>', update_user, name='update_user'),
     path('update-user/<int:pk>/', update_user, name='update_user'),
+    path('view_profile/<int:pk>/', view_profile, name='view_profile'),
     path('delete-user/<int:pk>/', delete_user, name='delete_user'),
     path('create-role/', create_role, name='create_role'),
     path('role_list/', role_list, name='role_list'),

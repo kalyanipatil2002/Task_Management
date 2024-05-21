@@ -1,16 +1,17 @@
-<!-- list_project.html -->
-
+{% extends 'base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project List</title>
+    <title>users List</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="">
+        {% block content %}
         <h1>List of Projects</h1>
         <a href="{% url 'create_Project' %}" class="btn btn-primary mb-3">Create Project</a> <!-- Create button -->
         <table class="table">
@@ -27,6 +28,9 @@
                     <td>{{ project.name }}</td>
                     <td>{{ project.description }}</td>
                     <td>
+                        <a href="{% url 'project_detail' project.id %}" class="btn btn-info">View Details</a>
+                    </td>
+                    <td>
                         <a href="{% url 'update_project' project.id %}" class="btn btn-primary">Edit</a>
                         <form action="{% url 'delete_project' project.id %}" method="post" style="display: inline;">
                             {% csrf_token %}
@@ -40,5 +44,6 @@
     </div>
     <!-- Bootstrap JS (Optional, if needed for certain features) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% endblock %}
 </body>
 </html>

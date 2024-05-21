@@ -29,15 +29,17 @@ class TaskForm(forms.ModelForm):
 
         widgets = {
             'deadline': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'assigned_to': forms.CheckboxSelectMultiple(),
         }
 
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
         self.fields['assigned_to'].queryset = UserProfile.objects.all()
+        self.fields['assigned_to'].queryset = UserProfile.objects.filter(is_active=True)
         self.fields['assigned_to'].widget.attrs['class'] = 'form-control col-md-12'
         self.fields['project'].widget.attrs['class'] = 'form-control col-md-12'
         self.fields['title'].widget.attrs['class'] = 'form-control col-md-12'
-
+    
 
 class CreateUserForm(UserCreationForm):
     class Meta:

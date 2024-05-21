@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse,HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from projects.models import Project, Task, User, UserProfile, Role
 from sweetify import sweetify
@@ -11,6 +11,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required, permission_required
+from datetime import date
 # @staff_member_required()
 
 
@@ -97,7 +98,10 @@ def update_user(request, pk):
         form = CreateUserForm(instance=user)
     return render(request, 'project/user/update_user.html', {'form': form})
 
-
+@login_required
+def view_profile(request, pk):
+    user = UserProfile.objects.get(pk=pk)
+    return render(request, 'project/user/view_profile.html', {'user': user})
 # # delete #
 @login_required
 def delete_user(request, pk):
@@ -168,7 +172,7 @@ def user_role_assignment(request, user_id):
         form = RoleAssignmentForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-            return redirect('list_users')  # Redirect to user detail page
+            return redirect('list_users')  
     else:
         form = RoleAssignmentForm(instance=user)
     return render(request, 'project/user/user_role_assignment.html', {'form': form})
@@ -241,7 +245,15 @@ def delete_project(request, pk):
         return redirect('project_list')  # Redirect to the project list view
     return JsonResponse({'status': False, 'error': 'Project Not Found '})
 
+def project_detail(request, pk):
+    project = Project.objects.get(pk=pk)
+    tasks = project.tasks.all()
 
+    context = {
+        'project': project,
+        'tasks': tasks
+    }
+    return render(request, 'project/project_detail.html', context)
 @login_required
 def create_task(request):
     if request.method == 'POST':
@@ -299,12 +311,20 @@ def update_task(request, pk):
             assigned_to_id = request.POST.get('assigned_to')
             if assigned_to_id:
                 task.assigned_to_id = assigned_to_id
-            task.save()
+            deadline_datetime=form.cleaned_data.get('deadline')
+            deadline_date=deadline_datetime.date()
 
-            form.save()
-            sweetify.success(
-                request, "The task has been successfully updated.")
-            return redirect('task_list')
+            current_date=date.today()
+            if deadline_date< current_date:
+                return  render(request,'project/task/update_task.html',{'form':form,'alert_message':"deadline cannot set past date"})
+            
+            else:
+                task.save()
+
+                form.save()
+                sweetify.success(
+                    request, "The task has been successfully updated.")
+                return redirect('task_list')
     else:
         form = TaskForm(instance=task)
     return render(request, 'project/task/update_task.html', {'form': form})

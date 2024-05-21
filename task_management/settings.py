@@ -84,22 +84,13 @@ WSGI_APPLICATION = 'task_management.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-
-        'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'abc',  # database name
-
-        'USER': 'postgres',
-
-        'PASSWORD': 'root',
-
-        # 'HOST': '208.109.12.216', # server database
-
-        'HOST': 'localhost',
-
-        'PORT': '5432',
-
+   'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'task',   # MySQL database name
+        'USER': 'root',              # MySQL username
+        'PASSWORD': 'root',          # MySQL password
+        'HOST': '127.0.0.1',         # MySQL host
+        'PORT': '3306',              # MySQL port
     }
 }
 

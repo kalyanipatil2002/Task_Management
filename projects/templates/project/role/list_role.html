@@ -27,6 +27,7 @@
                     <td>{{ roles.name }}</td>
                     <td>{{ roles.description }}</td>
                     <td>
+                        <a href="{% url 'user_role_assignment' user.pk %}" class="btn btn-primary">Assign Role</a>
                         <a href="{% url 'update_role' roles.pk %}" class="btn btn-primary">Update</a>
                         <form action="{% url 'delete_role' roles.pk %}" method="post" style="display: inline;">
                             {% csrf_token %}
